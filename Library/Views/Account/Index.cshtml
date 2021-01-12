@@ -1,0 +1,41 @@
+@{
+  Layout = "_Layout";
+}
+
+@using System.Security.Claims;
+@using Library.Models;
+@model IEnumerable<Library.Models.Book>
+
+<h2>Authentication with Identity</h2>
+<hr />
+@if (User.Identity.IsAuthenticated)
+{
+  <p>Hey @User.Identity.Name!</p>
+
+@if (Model.Any())
+{
+  <ul>
+    @foreach (Book book in Model)
+    {
+      <li>@Html.ActionLink($"{book.Description}", "Details", "Books", new { id = book.BookId })</li>
+    }
+  </ul>
+} 
+else
+{
+  <h3>No books are checked out!</h3>
+}
+
+  @using (Html.BeginForm("LogOff", "Account"))
+  {
+    <input type="submit" class="btn btn-danger btn-xs" value="Log out" />
+  }
+}
+else
+{
+  <p>@Html.ActionLink("Register", "Register")</p>
+  <p>@Html.ActionLink("Log in", "Login")</p>
+}
+
+<br>
+<p>@Html.ActionLink("Home", "Index", "Home")</p>
