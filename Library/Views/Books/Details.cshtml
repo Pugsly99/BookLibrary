@@ -2,23 +2,23 @@
   Layout = "_Layout";
 }
 
-@model Template.Models.Child
+@model Library.Models.Book
 
-<h2>CHILD Details</h2>
+<h2>Book Details</h2>
 <hr />
-<h3>@Html.DisplayNameFor(model => model.ChildName): @Html.DisplayFor(model => model.ChildName)</h3>
+<h3>@Html.DisplayNameFor(model => model.BookName): @Html.DisplayFor(model => model.BookName)</h3>
 
 @if(Model.JoinEntries.Count == 0)
 {
-  <p>This CHILD does not belong to any PARENTS</p>
+  <p>This Book does not belong to any Authors</p>
 }
 else
 {
-  <h4>PARENTS the CHILD belongs to:</h4>
+  <h4>Authors the Book belongs to:</h4>
   @* <ul>
-    @foreach(var join in Model.Parents)
+    @foreach(var join in Model.Authors)
     {
-      <li>@join.Parent.ParentName</li>
+      <li>@join.Author.AuthorName</li>
     }
   </ul> *@
 }
@@ -26,16 +26,16 @@ else
   <ul>
   @foreach(var join in Model.JoinEntries)
   {
-    <li>@join.Parent.ParentName</li>
-    @using (Html.BeginForm("DeleteParent", "Childs"))
+    <li>@join.Author.AuthorName</li>
+    @using (Html.BeginForm("DeleteAuthor", "Books"))
     {
-      @Html.Hidden("joinId", @join.ParentChildId)
+      @Html.Hidden("joinId", @join.AuthorBookId)
       <input type="submit" value="Delete"/>
     }
   }
   </ul>
   
-<p>@Html.ActionLink("Add a parent", "AddParent", new { id = Model.ChildId })</p>
+<p>@Html.ActionLink("Add a author", "AddAuthor", new { id = Model.BookId })</p>
 <p>@Html.ActionLink("Back to list", "Index")</p>
-<p>@Html.ActionLink("Edit Child", "Edit", new { id = Model.ChildId })</p>
-<p>@Html.ActionLink("Delete Child", "Delete", new { id = Model.ChildId })</p>
+<p>@Html.ActionLink("Edit Book", "Edit", new { id = Model.BookId })</p>
+<p>@Html.ActionLink("Delete Book", "Delete", new { id = Model.BookId })</p>

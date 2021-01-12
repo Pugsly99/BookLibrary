@@ -2,20 +2,20 @@
   Layout = "_Layout";
 }
 
-@using Template.Models;
-@model List<Template.Models.Child>;
+@using Library.Models;
+@model List<Library.Models.Book>;
 
-<h1>CHILDS</h1>
+<h1>Books</h1>
 
 @if (@Model.Count == 0)
 {
-  <h3>No CHILDS have been added yet!</h3>
+  <h3>No Books have been added yet!</h3>
 } 
 
-@foreach (Child child in Model)
+@foreach (Book book in Model)
 {
-  <li>@Html.ActionLink($"{child.ChildName}", "Details", new { id = child.ChildId })</li>
+  <li>@Html.ActionLink($"{book.BookName}", "Details", new { id = book.BookId })</li>
 }
 
-<p>@Html.ActionLink("Add new child", "Create")</p>
+<p>@Html.ActionLink("Add new book", "Create")</p>
 <p>@Html.ActionLink("Home", "Index", "Home")</p>

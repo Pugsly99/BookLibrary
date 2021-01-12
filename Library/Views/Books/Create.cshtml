@@ -2,18 +2,18 @@
   Layout = "_Layout";
 }
 
-@model Template.Models.Child  //this is where we get the 'model' which represents Child class/constructor.
+@model Library.Models.Book  //this is where we get the 'model' which represents Book class/constructor.
 
-<h4>Add a new Child</h4>
+<h4>Add a new Book</h4>
 
 @using (Html.BeginForm())
 {
-    @Html.LabelFor(model => model.ChildName)
-    @Html.TextBoxFor(model => model.ChildName)
+    @Html.LabelFor(model => model.BookName)
+    @Html.TextBoxFor(model => model.BookName)
 
-    @Html.Label("Select Parent")
-    @Html.DropDownList("ParentId") //this is where we use the viewbag.
+    @Html.Label("Select Author")
+    @Html.DropDownList("AuthorId") //this is where we use the viewbag.
 
-    <input type="submit" value="Add new child" class="btn btn-default" />
+    <input type="submit" value="Add new book" class="btn btn-default" />
 }
-<p>@Html.ActionLink("Show all childs", "Index")</p>
+<p>@Html.ActionLink("Show all books", "Index")</p>
