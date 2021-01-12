@@ -2,16 +2,16 @@
   Layout = "_Layout";
 }
 
-@model Template.Models.Parent
+@model Library.Models.Author
 
-<h4>Edit a parent</h4>
+<h4>Edit a author</h4>
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(model => model.ParentId)
+    @Html.HiddenFor(model => model.AuthorId)
     @* @Html.HiddenFor(model => model.StartDate) *@
 
-    @Html.LabelFor(model => model.ParentName)
-    @Html.EditorFor(model => model.ParentName)
+    @Html.LabelFor(model => model.AuthorName)
+    @Html.EditorFor(model => model.AuthorName)
 
     @* @Html.DisplayNameFor(model => model.StartDate) 
     @Html.EditorFor(model => model.StartDate) *@
@@ -22,4 +22,4 @@
 
     <input type="submit" value="Edit" />
 }
-<p>@Html.ActionLink("Show all parents", "Index")</p>
+<p>@Html.ActionLink("Show all authors", "Index")</p>
