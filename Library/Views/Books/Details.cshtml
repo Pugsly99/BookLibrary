@@ -30,7 +30,14 @@ else
 
 @if (User.Identity.IsAuthenticated)
 {
-<p>@Html.ActionLink("Checkout Book", "Confirm", "Checkouts", new { id = Model.BookId })</p>
+  @if(Model.User == null)
+  {
+    <p>@Html.ActionLink("Checkout Book", "Confirm", "Checkouts", new { id = Model.BookId })</p>
+  }
+  else
+  {
+    <h1>This book is checked out!</h1>
+  }
 }
 
 <p>@Html.ActionLink("Add a author", "AddAuthor", new { id = Model.BookId })</p>
