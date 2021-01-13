@@ -1,0 +1,17 @@
+@{
+  Layout = "_Layout";
+}
+@using Library.Models
+@model Library.Models.Book
+
+<h4>Add a new Copy</h4>
+
+@using (Html.BeginForm())
+{
+    //@Html.Hidden("bookId", @model.BookId)
+    @Html.HiddenFor(model => model.BookId)
+    
+    <input type="submit" value="Add new Copy" class="btn btn-default" />
+}
+
+<p>@Html.ActionLink("Show all books", "Index")</p>

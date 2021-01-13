@@ -42,6 +42,7 @@ else
   }
 }
 
+<p>@Html.ActionLink("Add a Copy of this Book", "Create", "Collections", new { id = Model.BookId })</p>
 <p>@Html.ActionLink("Add a author", "AddAuthor", new { id = Model.BookId })</p>
 <p>@Html.ActionLink("Back to list", "Index")</p>
 <p>@Html.ActionLink("Edit Book", "Edit", new { id = Model.BookId })</p>

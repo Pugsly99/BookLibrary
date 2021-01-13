@@ -9,6 +9,7 @@ namespace Library.Models
     public Book()
     {
       this.JoinEntries = new HashSet<AuthorBook>();
+      this.Collections = new HashSet<Collection>(); 
     }
     //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
     public DateTime ReturnDate { get; set; }
@@ -16,5 +17,6 @@ namespace Library.Models
     public string BookName { get; set; }
     public ICollection<AuthorBook> JoinEntries { get; }
     public virtual string User { get; set; }
+    public ICollection<Collection> Collections { get; set; }
   }
 }  
