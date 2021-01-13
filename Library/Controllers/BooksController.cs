@@ -45,8 +45,8 @@ namespace Library.Controllers
     public ActionResult Details(int id)
     {
       var thisBook = _db.Books
-          .Include(book => book.JoinEntries)
-          .ThenInclude(join => join.Author)
+          // .Include(book => book.JoinEntries)
+          // .ThenInclude(join => join.Author)
           .FirstOrDefault(book => book.BookId == id);
       return View(thisBook);
     }

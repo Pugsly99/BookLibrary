@@ -38,7 +38,7 @@ namespace Library.Controllers
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      book.User = currentUser;
+      book.User = userId;
       DateTime today = DateTime.Now;
       DateTime returnDate = today.AddDays(7);
       book.ReturnDate = returnDate;
@@ -56,66 +56,19 @@ namespace Library.Controllers
       return View(thisBook);
     }
 
-    public ActionResult Edit(int id)
+    public ActionResult Return(int id)
     {
       var thisBook = _db.Books.FirstOrDefault(book => book.BookId == id);
-      ViewBag.AuthorId = new SelectList(_db.Authors, "AuthorId", "AuthorName"); // ViewBag only transfers data from controller to view
       return View(thisBook);
     }
     
     [HttpPost]
-    public ActionResult Edit(Book book, int AuthorId)
+    public ActionResult Return(Book book)
     {
-      if (AuthorId != 0)
-      {
-        _db.AuthorBook.Add(new AuthorBook() { AuthorId = AuthorId, BookId = book.BookId });
-      }
+      book.User = null;
       _db.Entry(book).State=EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-
-    public ActionResult AddAuthor(int id)
-    {
-      var thisBook = _db.Books.FirstOrDefault(books => books.BookId == id);
-      ViewBag.AuthorId = new SelectList(_db.Authors, "AuthorId", "AuthorName");
-      return View(thisBook);
-    }
-    
-    [HttpPost]
-    public ActionResult AddAuthor(Book book, int AuthorId)
-    {
-      if(AuthorId != 0)
-      {
-        _db.AuthorBook.Add(new AuthorBook() { AuthorId = AuthorId, BookId = book.BookId});
-      }
-        _db.SaveChanges();
-        return RedirectToAction("Index");
-    }
-
-    public ActionResult Delete(int id)
-    {
-      var thisBook = _db.Books.FirstOrDefault(books => books.BookId == id);
-      return View(thisBook);
-    }
-
-    [HttpPost, ActionName("Delete")]
-    public ActionResult DeleteConfirmed(int id)
-    {
-      var thisBook = _db.Books.FirstOrDefault(books => books.BookId == id);
-      _db.Books.Remove(thisBook);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
-    }
-  
-    [HttpPost]
-    public ActionResult DeleteAuthor(int joinId)
-    {
-      var joinEntry = _db.AuthorBook.FirstOrDefault(entry => entry.AuthorBookId == joinId);
-      _db.AuthorBook.Remove(joinEntry);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
-    }
-
   }
 }

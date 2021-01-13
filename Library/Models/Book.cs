@@ -10,13 +10,11 @@ namespace Library.Models
     {
       this.JoinEntries = new HashSet<AuthorBook>();
     }
-    
     //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
     public DateTime ReturnDate { get; set; }
-    public int UserId { get; set; }
     public int BookId { get; set; }
     public string BookName { get; set; }
     public ICollection<AuthorBook> JoinEntries { get; }
-    public virtual ApplicationUser? User { get; set; }
+    public virtual string User { get; set; }
   }
 }  

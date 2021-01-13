@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20210112232658_Inital")]
-    partial class Inital
+    [Migration("20210113212747_string")]
+    partial class @string
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -110,13 +110,9 @@ namespace Library.Migrations
 
                     b.Property<DateTime>("ReturnDate");
 
-                    b.Property<int>("UserId");
-
-                    b.Property<string>("UserId1");
+                    b.Property<string>("User");
 
                     b.HasKey("BookId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Books");
                 });
@@ -239,13 +235,6 @@ namespace Library.Migrations
                         .WithMany("JoinEntries")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Library.Models.Book", b =>
-                {
-                    b.HasOne("Library.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

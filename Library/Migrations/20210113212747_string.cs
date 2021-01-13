@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Library.Migrations
 {
-    public partial class Inital : Migration
+    public partial class @string : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -59,6 +59,21 @@ namespace Library.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Authors", x => x.AuthorId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Books",
+                columns: table => new
+                {
+                    BookId = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    ReturnDate = table.Column<DateTime>(nullable: false),
+                    BookName = table.Column<string>(nullable: true),
+                    User = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Books", x => x.BookId);
                 });
 
             migrationBuilder.CreateTable(
@@ -168,28 +183,6 @@ namespace Library.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Books",
-                columns: table => new
-                {
-                    BookId = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    ReturnDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<int>(nullable: false),
-                    BookName = table.Column<string>(nullable: true),
-                    UserId1 = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Books", x => x.BookId);
-                    table.ForeignKey(
-                        name: "FK_Books_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AuthorBook",
                 columns: table => new
                 {
@@ -261,11 +254,6 @@ namespace Library.Migrations
                 name: "IX_AuthorBook_BookId",
                 table: "AuthorBook",
                 column: "BookId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Books_UserId1",
-                table: "Books",
-                column: "UserId1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -292,13 +280,13 @@ namespace Library.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
                 name: "Authors");
 
             migrationBuilder.DropTable(
                 name: "Books");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
         }
     }
 }

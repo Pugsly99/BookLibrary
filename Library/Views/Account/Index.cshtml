@@ -13,31 +13,33 @@
 {
   <p>Hey @User.Identity.Name!</p>
 
-@if (Model.Any())
-{
-  <ul>
-    @foreach (Book book in Model)
-    {
-      <li>Book Name : @Html.ActionLink($"{book.BookName}", "Details", "Books", new { id = book.BookId }), Return Date : @Html.ActionLink($"{book.ReturnDate}", "Details", "Books", new { id = book.BookId })</li>
-    }
-  </ul>
-} 
-else
-{
-  <h3>No books are checked out!</h3>
-}
-
-  @using (Html.BeginForm("LogOff", "Account"))
+  @if (Model.Any())
   {
-    <input type="submit" class="btn btn-danger btn-xs" value="Log out" />
+    <ul>
+      @foreach (Book book in Model)
+      {
+        <li>Book Name : @Html.ActionLink($"{book.BookName}", "Details", "Books", new { id = book.BookId }), Return Date : @Html.ActionLink($"{book.ReturnDate}", "Details", "Books", new { id = book.BookId })</li>
+        @using (Html.BeginForm("Return", "Checkouts"))
+        {
+          @Html.Hidden("bookId", @book.BookId)
+          @Html.Hidden("bookName", @book.BookName)
+          <input type="submit" value="Return" />
+        }
+      }
+    </ul>
+  }
+  else
+  {
+  <h3>No books are checked out!</h3>
   }
 }
 
-else
-{
-  <p>@Html.ActionLink("Register", "Register")</p>
-  <p>@Html.ActionLink("Log in", "Login")</p>
-}
+    @using (Html.BeginForm("LogOff", "Account"))
+    {
+      <input type="submit" class="btn btn-danger btn-xs" value="Log out" />
+    } 
+    
+<p>@Html.ActionLink("Log in", "Login")</p>
+  
 
-<br>
-<p>@Html.ActionLink("Home", "Index", "Home")</p>
+
