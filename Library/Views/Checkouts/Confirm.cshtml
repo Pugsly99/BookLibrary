@@ -1,0 +1,26 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Library.Models.Book
+
+<h2>Would you like to checkout this book?</h2>
+
+<h4>@Html.DisplayFor(model => model.BookName)</h4>
+
+@using (Html.BeginForm())
+{
+
+    @Html.HiddenFor(model => model.BookId)
+    @Html.HiddenFor(model => model.BookName)
+
+    @* @Html.LabelFor(model => model.BookName)
+    @Html.EditorFor(model => model.BookName) *@
+@* 
+    @Html.Label("Select a PARENT")
+    @Html.DropDownList("AuthorId") *@ 
+
+    <input type="submit" value="Checkout" />
+}
+
+<p>@Html.ActionLink("Back to list", "Index")</p>

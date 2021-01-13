@@ -8,36 +8,41 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using System.Security.Claims;
+using System.Globalization;
+using System;
 
 namespace Library.Controllers
 {
-  public class BooksController : Controller
+  [Authorize]
+  public class CheckoutsController : Controller
   {
     private readonly LibraryContext _db;
-    public BooksController(LibraryContext db)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public CheckoutsController(UserManager<ApplicationUser> userManager,LibraryContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
-
     public ActionResult Index()
     {
-      return View(_db.Books.ToList());
-    }
-
-    public ActionResult Create()
-    {
-      ViewBag.AuthorId = new SelectList(_db.Authors, "AuthorId", "AuthorName");
       return View();
+    }
+    public ActionResult Confirm(int id)
+    {
+      var thisBook = _db.Books.FirstOrDefault(book => book.BookId == id);
+      return View(thisBook);
     }
 
     [HttpPost]
-    public ActionResult Create(Book book, int AuthorId)
+    public async Task<ActionResult> Confirm(Book book)
     {
-      _db.Books.Add(book);
-      if (AuthorId != 0)
-      {
-        _db.AuthorBook.Add(new AuthorBook() { AuthorId = AuthorId, BookId = book.BookId });
-      }
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      book.User = currentUser;
+      DateTime today = DateTime.Now;
+      DateTime returnDate = today.AddDays(7);
+      book.ReturnDate = returnDate;
+      _db.Entry(book).State=EntityState.Modified;
       _db.SaveChanges();
       return RedirectToAction("Index");
     }

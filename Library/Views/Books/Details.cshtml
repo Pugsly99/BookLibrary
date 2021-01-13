@@ -15,14 +15,6 @@
 else
 {
   <h4>Authors the Book belongs to:</h4>
-  @* <ul>
-    @foreach(var join in Model.Authors)
-    {
-      <li>@join.Author.AuthorName</li>
-    }
-  </ul> *@
-}
-
   <ul>
   @foreach(var join in Model.JoinEntries)
   {
@@ -34,7 +26,13 @@ else
     }
   }
   </ul>
-  
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+<p>@Html.ActionLink("Checkout Book", "Confirm", "Checkouts", new { id = Model.BookId })</p>
+}
+
 <p>@Html.ActionLink("Add a author", "AddAuthor", new { id = Model.BookId })</p>
 <p>@Html.ActionLink("Back to list", "Index")</p>
 <p>@Html.ActionLink("Edit Book", "Edit", new { id = Model.BookId })</p>
